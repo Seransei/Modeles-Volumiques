@@ -23,6 +23,7 @@ public class ModeleVolumique : MonoBehaviour
 
         voxelMap = new Dictionary<Vector3, bool>();
         InitBox();
+
         GenerateSpheres();
 
         DisplayBox();
@@ -63,24 +64,17 @@ public class ModeleVolumique : MonoBehaviour
     {
         foreach (KeyValuePair<Vector3, bool> item in voxelMap)
         {
-            bool display = false;
+            voxelMap.TryGetValue(item.Key + new Vector3(0, 1, 0), out bool forward);
+            voxelMap.TryGetValue(item.Key + new Vector3(0, -1, 0), out bool backward);
 
-            bool forward;
-            voxelMap.TryGetValue(item.Key + new Vector3(0, 1, 0), out forward);
-            bool backward;
-            voxelMap.TryGetValue(item.Key + new Vector3(0, -1, 0), out backward);
+            voxelMap.TryGetValue(item.Key + new Vector3(1, 0, 0), out bool right);
+            voxelMap.TryGetValue(item.Key + new Vector3(-1, 0, 0), out bool left);
 
-            bool right;
-            voxelMap.TryGetValue(item.Key + new Vector3(1, 0, 0), out right);
-            bool left;
-            voxelMap.TryGetValue(item.Key + new Vector3(-1, 0, 0), out left);
+            voxelMap.TryGetValue(item.Key + new Vector3(0, 0, 1), out bool up);
+            voxelMap.TryGetValue(item.Key + new Vector3(0, 0, -1), out bool down);
 
-            bool up;
-            voxelMap.TryGetValue(item.Key + new Vector3(0, 0, 1), out up);
-            bool down;
-            voxelMap.TryGetValue(item.Key + new Vector3(0, 0, -1), out down);
-
-            if (!forward || !backward || !right || !left || !up || !down)
+            //if (!forward || !backward || !right || !left || !up || !down) // affiche mieux, ne fonctionne pas 
+            if(item.Value)// affiche les spheres normalement
                 Instantiate(cube, item.Key, Quaternion.identity, this.transform);
         }
     }

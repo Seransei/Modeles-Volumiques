@@ -34,7 +34,7 @@ public class Sphere
                 {
                     float z = model.boxMinCorner.z + k * stepZ;
                     Vector3 pos = new Vector3(x, y, z);
-                    if (Mathf.Pow(x - position.x, 2) + Mathf.Pow(y - position.y, 2) + Mathf.Pow(z - position.z, 2) - radius * radius < 0)
+                    if (Mathf.Pow(x - position.x, 2) + Mathf.Pow(y - position.y, 2) + Mathf.Pow(z - position.z, 2) - radius * radius < 0) // si pos est dans la sphere
                     {
                         if (!model.voxelMap.ContainsKey(pos))
                             model.voxelMap.Add(pos, true);
